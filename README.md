@@ -1,0 +1,2 @@
+# KidIcarusUprisingMiracleSimurator
+新光神話パルテナの鏡の奇跡配置シミュレータ
