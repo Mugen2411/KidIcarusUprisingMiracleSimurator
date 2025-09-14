@@ -98,7 +98,7 @@ void Solver::OutputNames()
 		{
 			break;
 		}
-		std::cout << "ID: " << id << " " << m_names[id] << "(レベル" << m_maxLevels[id] << "まで)" << std::endl;
+		std::cout << "[ID: " << id << "] " << m_names[id] << "(レベル" << m_maxLevels[id] << "まで)" << std::endl;
 	}
 }
 
@@ -217,7 +217,7 @@ void Solver::Solve()
 		}
 		std::cout << std::endl;
 	}
-
+	std::cout << "--- 追加可能な奇跡一覧---" << std::endl;
 	bool isFound = false;
 	for (auto& cand : m_patterns)
 	{
@@ -273,7 +273,7 @@ void Solver::Solve()
 		}
 		if (isPossible)
 		{
-			std::cout << "ID:" << miracleId.GetID() << " " << m_names[miracleId.GetID()] << "(レベル" << miracleId.GetLevel() + 1 << ")" << std::endl;
+			std::cout << "[ID:" << miracleId.GetID() << "] " << m_names[miracleId.GetID()] << "(レベル" << miracleId.GetLevel() + 1 << ")" << std::endl;
 			isFound = true;
 		}
 	}
