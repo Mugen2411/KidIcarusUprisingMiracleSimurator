@@ -5,16 +5,24 @@
 #include <cassert>
 #include <cstdint>
 #include <iostream>
+#include "BitManager.h"
 
 /**
     @brief    二次元のグリッドを表すクラス
 
     @tparam    T   格納する型
  */
-template <class T>
 class Grid2D
 {
 public:
+    /**
+     * @brief デフォルトコンストラクタ
+     */
+    Grid2D()
+        : m_data(), m_width(0), m_height(0)
+    {
+    }
+
     /**
         @brief    コンストラクタ
 
@@ -22,8 +30,8 @@ public:
         @param[in]    width           幅
         @param[in]    initialValue    初期値
     */
-    Grid2D(int64_t height, int64_t width, T initialValue)
-        : m_data(height * width, initialValue), m_width(width), m_height(height)
+    Grid2D(int64_t height, int64_t width)
+        : m_data(), m_width(width), m_height(height)
     {
     }
 
@@ -35,9 +43,21 @@ public:
 
         @return         目的の座標の参照
      */
-    T &Ref(int64_t x, int64_t y)
+    bool Get(int64_t x, int64_t y)
     {
-        return m_data[GetIndex(x, y)];
+        return m_data.Get(GetIndex(x, y));
+    }
+
+    /**
+        @brief            指定した座標の値を変更する
+
+        @param[in]    x   X座標
+        @param[in]    y   Y座標
+        @param[in]    val 設定する値
+     */
+    void Set(int64_t x, int64_t y, bool val)
+    {
+        return m_data.Set(GetIndex(x, y), val);
     }
 
     /**
@@ -134,34 +154,9 @@ public:
     }
 
 private:
-    std::vector<T> m_data; //!< 本体となる配列
+    BitManager m_data; //!< 本体となるビット列
     int64_t m_width;       //!< 幅
     int64_t m_height;      //!< 高さ
-
-    template <class U>
-    friend std::istream &operator>>(std::istream &stream, Grid2D<U> &dest);
 };
-
-/**
-    @brief            入力ストリーム演算子
-
-    @tparam    T       Grid2Dに格納する型
-    @param[in]        stream  入力ストリーム
-    @param[in]        dest    入力を受け付ける先のGrid2D
-
-    @return                 入力ストリーム
- */
-template <class T>
-std::istream &operator>>(std::istream &stream, Grid2D<T> &dest)
-{
-    for (int64_t y = 0; y < dest.m_height; ++y)
-    {
-        for (int64_t x = 0; x < dest.m_width; ++x)
-        {
-            stream >> dest.Ref(x, y);
-        }
-    }
-    return stream;
-}
 
 #endif //__INCLUDED_GRID2D__

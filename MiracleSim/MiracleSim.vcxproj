@@ -126,8 +126,10 @@
     <ClCompile Include="Source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\BitManager.h" />
     <ClInclude Include="Source\Grid2D.h" />
     <ClInclude Include="Source\MiracleID.h" />
+    <ClInclude Include="Source\Solver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

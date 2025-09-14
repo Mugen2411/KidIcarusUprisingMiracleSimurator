@@ -82,3 +82,28 @@ private:
 	int m_id;		//!< 奇跡ID
 	int m_level;	//!< 奇跡レベル(1～4)
 };
+
+#include <functional>
+
+namespace std
+{
+	/**
+		@brief	ビット管理クラスのハッシュ値を計算する
+
+		@tparam	 BitManagerを指定
+	 */
+	template <>
+	struct hash<MiracleID>
+	{
+		/**
+			@brief	呼び出し演算子
+
+			@param[in]	val 対象
+			@return ハッシュ値
+		 */
+		size_t operator()(const MiracleID& val) const
+		{
+			return std::hash<int>()(val);
+		}
+	};
+}
