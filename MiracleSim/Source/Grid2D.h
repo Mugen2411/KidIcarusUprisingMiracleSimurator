@@ -153,6 +153,61 @@ public:
         }
     }
 
+    /**
+     * @brief R×90度回転させたグリッドを取得
+     * @param R 角度(直角)
+     * @return 回転させたグリッド
+     */
+    Grid2D GetRotated(int R)
+    {
+        switch (R%4)
+        {
+        case 0:
+        {
+            return *this;
+        }
+        case 1:
+        {
+            Grid2D ret(m_width, m_height);
+            for (int y = 0; y < m_height; ++y)
+            {
+                for (int x = 0; x < m_width; ++x)
+                {
+                    ret.Set(m_height - y - 1, x, Get(x, y));
+                }
+            }
+            return ret;
+        }
+        case 2:
+        {
+            Grid2D ret(m_height, m_width);
+            for (int y = 0; y < m_height; ++y)
+            {
+                for (int x = 0; x < m_width; ++x)
+                {
+                    ret.Set(m_width - x - 1, m_height - y - 1, Get(x, y));
+                }
+            }
+            return ret;
+        }
+        case 3:
+        {
+            Grid2D ret(m_width, m_height);
+            for (int y = 0; y < m_height; ++y)
+            {
+                for (int x = 0; x < m_width; ++x)
+                {
+                    ret.Set(y, m_width - x - 1, Get(x, y));
+                }
+            }
+            return ret;
+        }
+        default:
+            break;
+        }
+
+    }
+
 private:
     BitManager m_data; //!< 本体となるビット列
     int64_t m_width;       //!< 幅

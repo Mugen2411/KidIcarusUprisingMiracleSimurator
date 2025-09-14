@@ -35,6 +35,10 @@ int main()
 			std::cin >> ID;
 			solver.DeleteCandidate(ID);
 		}break;
+		case 's':
+		{
+			solver.Solve();
+		}break;
 		case 'q':
 		{
 			std::cout << "アプリケーションを終了します。" << std::endl;

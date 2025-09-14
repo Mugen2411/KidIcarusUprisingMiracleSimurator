@@ -74,6 +74,15 @@ public:
 	{
 		return m_id * MAX_LEVEL + m_level;
 	}
+
+	/**
+	 * @brief 奇跡IDを取得
+	 * @return 奇跡ID
+	 */
+	int GetID() const
+	{
+		return m_id;
+	}
 public:
 	static constexpr int MAX_LEVEL = 4;	//!< レベルの最大値
 	static constexpr int INVALID = -1;	//!< 無効値

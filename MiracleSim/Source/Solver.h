@@ -44,6 +44,11 @@ public:
 	 */
 	void OutputNames();
 
+	/**
+	 * @brief 現在の候補がパネルに入るか確認して入るかもしれない奇跡を出力する
+	 */
+	void Solve();
+
 private:
 	std::unordered_map<MiracleID, Grid2D> m_patterns;	//!< 全奇跡のパネル形状リスト
 	std::unordered_map<int, std::string> m_names;		//!< 全奇跡の名前リスト
