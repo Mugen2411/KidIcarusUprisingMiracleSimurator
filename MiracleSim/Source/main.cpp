@@ -19,6 +19,22 @@ int main()
 
 		switch (command)
 		{
+		case 'l':
+		{
+			solver.OutputNames();
+		}break;
+		case 'a':
+		{
+			int ID, level;
+			std::cin >> ID >> level;
+			solver.AddCandidate(ID, level);
+		}break;
+		case 'd':
+		{
+			int ID;
+			std::cin >> ID;
+			solver.DeleteCandidate(ID);
+		}break;
 		case 'q':
 		{
 			std::cout << "アプリケーションを終了します。" << std::endl;
