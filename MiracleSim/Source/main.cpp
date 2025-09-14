@@ -1,7 +1,15 @@
 ﻿#include <iostream>
+#include "Solver.h"
 
 int main()
 {
+	Solver solver;
+	if (!solver.Load("patterns.txt"))
+	{
+		std::cout << "パターンファイルの読み込みに失敗しました";
+		return 0;
+	}
+
 	while (1)
 	{
 		std::cout << "コマンドを入力してください > ";
