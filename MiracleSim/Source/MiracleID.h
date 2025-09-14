@@ -83,6 +83,14 @@ public:
 	{
 		return m_id;
 	}
+	/**
+	 * @brief レベルを取得
+	 * @return レベル
+	 */
+	int GetLevel() const
+	{
+		return m_level;
+	}
 public:
 	static constexpr int MAX_LEVEL = 4;	//!< レベルの最大値
 	static constexpr int INVALID = -1;	//!< 無効値

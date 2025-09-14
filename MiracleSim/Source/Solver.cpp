@@ -78,7 +78,7 @@ void Solver::DeleteCandidate(int ID)
 	bool isFound = false;
 	for (int lv = 0; lv < MiracleID::MAX_LEVEL; ++lv)
 	{
-		if (m_candidate.count(MiracleID(ID, lv)) == 0)
+		if (m_candidate.count(MiracleID(ID, lv)) != 0)
 		{
 			m_candidate.erase(MiracleID(ID, lv));
 			isFound = true;
@@ -126,9 +126,9 @@ void Solver::Solve()
 			{
 				Grid2D panel = m_patterns[cand].GetRotated(r);
 
-				for (int y = 0; y < BOARD_SIZE - panel.GetHeight(); ++y)
+				for (int y = 0; y < BOARD_SIZE - panel.GetHeight() + 1; ++y)
 				{
-					for (int x = 0; x < BOARD_SIZE - panel.GetWidth(); ++x)
+					for (int x = 0; x < BOARD_SIZE - panel.GetWidth() + 1; ++x)
 					{
 						bool canPlace = true;
 						Grid2D nx = curBoard[bIdx];
@@ -143,16 +143,11 @@ void Solver::Solve()
 								if (curBoard[bIdx].Get(x2 + x, y2 + y))
 								{
 									canPlace = false;
-									break;
 								}
 								else
 								{
 									nx.Set(x2 + x, y2 + y, true);
 								}
-							}
-							if (!canPlace)
-							{
-								break;
 							}
 						}
 						if (canPlace)
@@ -168,12 +163,14 @@ void Solver::Solve()
 
 		if (nextBoard.empty())
 		{
-			std::cout << "入らない奇跡があります";
+			std::cout << "入らない奇跡があります" << std::endl;
 			return;
 		}
 
 		curBoard = nextBoard;
 		curHistory = nextHistory;
+		nextBoard.clear();
+		nextHistory.clear();
 	}
 
 	auto& example = curHistory.back();
@@ -219,5 +216,70 @@ void Solver::Solve()
 			}
 		}
 		std::cout << std::endl;
+	}
+
+	bool isFound = false;
+	for (auto& cand : m_patterns)
+	{
+		auto miracleId = cand.first;
+
+		bool isExist = false;
+		for (int lv = miracleId.GetLevel(); lv < m_maxLevels[miracleId.GetID()]; lv++)
+		{
+			if (m_candidate.count(MiracleID(miracleId.GetID(), lv)))
+			{
+				isExist = true;
+			}
+		}
+		if (isExist)
+		{
+			continue;
+		}
+		bool isPossible = false;
+		for (int bIdx = 0; bIdx < curBoard.size(); ++bIdx)
+		{
+			for (int r = 0; r < 4; ++r)
+			{
+				Grid2D panel = m_patterns[miracleId].GetRotated(r);
+
+				for (int y = 0; y < BOARD_SIZE - panel.GetHeight() + 1; ++y)
+				{
+					for (int x = 0; x < BOARD_SIZE - panel.GetWidth() + 1; ++x)
+					{
+						bool canPlace = true;
+						Grid2D nx = curBoard[bIdx];
+						for (int y2 = 0; y2 < panel.GetHeight(); ++y2)
+						{
+							for (int x2 = 0; x2 < panel.GetWidth(); ++x2)
+							{
+								if (!panel.Get(x2, y2))
+								{
+									continue;
+								}
+								if (curBoard[bIdx].Get(x2 + x, y2 + y))
+								{
+									canPlace = false;
+								}
+							}
+						}
+						if (canPlace)
+						{
+							isPossible = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		if (isPossible)
+		{
+			std::cout << "ID:" << miracleId.GetID() << " " << m_names[miracleId.GetID()] << "(レベル" << miracleId.GetLevel() + 1 << ")" << std::endl;
+			isFound = true;
+		}
+	}
+
+	if (!isFound)
+	{
+		std::cout << "追加できる奇跡はありません" << std::endl;
 	}
 }
