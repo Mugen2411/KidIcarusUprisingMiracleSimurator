@@ -45,6 +45,11 @@ public:
 	void OutputNames();
 
 	/**
+	 * @brief 候補を出力する
+	 */
+	void OutputCandidates();
+
+	/**
 	 * @brief 現在の候補がパネルに入るか確認して入るかもしれない奇跡を出力する
 	 */
 	void Solve();

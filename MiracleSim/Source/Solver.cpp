@@ -92,6 +92,7 @@ void Solver::DeleteCandidate(int ID)
 
 void Solver::OutputNames()
 {
+	std::cout << "--- 奇跡IDと最大レベル一覧 ---" << std::endl;
 	for (int id = 0; ; ++id)
 	{
 		if (m_names.count(id) == 0)
@@ -99,6 +100,15 @@ void Solver::OutputNames()
 			break;
 		}
 		std::cout << "[ID: " << id << "] " << m_names[id] << "(レベル" << m_maxLevels[id] << "まで)" << std::endl;
+	}
+}
+
+void Solver::OutputCandidates()
+{
+	std::cout << "--- 現在候補に入っている奇跡 ---" << std::endl;
+	for (auto& cand : m_candidate)
+	{
+		std::cout << "[ID: " << cand.GetID() << "] " << m_names[cand.GetID()] << "(レベル" << cand.GetLevel() + 1 << ")" << std::endl;
 	}
 }
 
