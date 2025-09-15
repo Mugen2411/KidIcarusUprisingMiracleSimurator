@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <string>
+#include <windows.h>
 
 /**
  * @brief 実際に実現性判定を行うクラス
@@ -16,6 +17,15 @@ public:
 	 */
 	Solver()
 	{
+		auto handle = GetStdHandle(STD_OUTPUT_HANDLE);
+		if (handle == INVALID_HANDLE_VALUE)
+		{
+			printf("Console Initialize Failed.");
+			exit(-1);
+		}
+		DWORD mode;
+		GetConsoleMode(handle, &mode);
+		SetConsoleMode(handle, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 	}
 
 	/**
